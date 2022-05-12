@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block Title %}
+    Stats
+{% endblock %}
+
+{% block Body %}
+    <div class="alert alert-info">
+        Titre Pfe: {{pfe.titrePFE}}
+    </div>
+    <div class="row">
+
+            <div class="card text-white bg-primary mb-3" style="width: 18rem;margin: 10px;">
+                <div class="card-header">Entreprise: {{ pfe.entreprise }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">Réalisé par: {{pfe.nomEtudiant }}</h5>
+                </div>
+            </div>
+
+    </div>
+{% endblock %}

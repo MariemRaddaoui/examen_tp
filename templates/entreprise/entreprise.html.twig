@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block Title %}
+    Stats
+{% endblock %}
+
+{% block Body %}
+    <div class="alert alert-info">
+        Nombre de Pfe par entreprise
+    </div>
+    <div class="row">
+        {% for pfe in pfes %}
+            {% if loop.index is odd %}
+                {% set bg="primary" %}
+            {% else %}
+                {% set bg="secondary" %}
+            {% endif %}
+            <div class="card text-white bg-{{ bg }} mb-3" style="width: 18rem;margin: 10px;">
+                <div class="card-header">{{ name[ loop.index0 ] }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ pfe.nombre }} Pfe(s)</h5>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

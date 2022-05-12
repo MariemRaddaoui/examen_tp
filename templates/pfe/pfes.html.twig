@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block Title %}
+    Liste des PFEs
+{% endblock %}
+
+{% block Body %}
+    <div class="alert alert-info">
+        Les PFEs
+    </div>
+    <div class="row">
+        {% for pfe in pfes %}
+            {% if loop.index is odd %}
+                {% set bg="primary" %}
+            {% else %}
+                {% set bg="secondary" %}
+            {% endif %}
+            <div class="card text-white bg-{{ bg }} mb-3" style="width: 18rem;margin: 10px;">
+                <div class="card-header">Titre PFE : {{ pfe.titrePFE }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ pfe.nomEtudiant }}</h5>
+                    <p class="card-text">{{ pfe.entreprise }}</p>
+                    <a href="{{ path('pfe_detail',{id : pfe.id}) }}" class="btn btn-light">Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

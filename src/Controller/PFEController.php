@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PFEController extends AbstractController
 {
-    #[Route('/add', name: 'app_add')]
+    #[Route('/add', name: 'add_pfe')]
     public function addPFE(ManagerRegistry $doctrine,Request $request): Response
     {
         $pfe=new PFE();
@@ -24,7 +24,7 @@ class PFEController extends AbstractController
             $manager->persist($pfe);
             $manager->flush();
             $this->addFlash('success','Le pfe a été ajouté');
-            return $this->redirectToRoute('app_detail',['id'=>$pfe->getId()]);
+            return $this->redirectToRoute('pfe_detail',['id'=>$pfe->getId()]);
 
         }else{
             return $this->render('pfe/add_form.html.twig', [
@@ -33,14 +33,29 @@ class PFEController extends AbstractController
             ]);
         }}
 
-        #[Route('/{id}', name: 'app_detail')]
-    public function index(PFE $pfe=null): Response
+        #[Route('/pfe/{id<\d+>}', name: 'pfe_detail')]
+    public function index($id, ManagerRegistry $doctrine): Response
     {
-if(!$pfe){
-    return new Response("<html> Aucun pfe n'est trouvé</html>");
-}
-        return $this->render('pfe/index.html.twig', [
+        $manager = $doctrine->getRepository(Pfe::class);
+        $pfe = $manager->find($id);
+    if(!$pfe){
+      $this->addFlash('error', "Cette Pfe n'existe pas");
+        return $this->redirectToRoute('add_pfe');
+    }
+        return $this->render('pfe/infos.html.twig', [
             'pfe' => $pfe,
+        ]);
+    }
+
+    #[Route('/pfes', name: 'pfe_all')]
+    public function allPfes(ManagerRegistry $doctrine){
+
+        $pfe = $doctrine->getRepository(Pfe::class);
+        $pfes= $pfe->findAll();
+
+
+        return $this->render('pfe/pfes.html.twig', [
+            'pfes'=> $pfes
         ]);
     }
 
